@@ -40,3 +40,6 @@ export type { SetKeyBody } from "./modules/keys/createKeySetter";
 // Types for DNS Interface
 export type { ListNameserversReturnType } from "./modules/dns/createDNSNameserverLister";
 export type { SetNameserversReturnType } from "./modules/dns/createDNSNameserverSetter";
+export type { GetDNSPreferencesReturnType } from "./modules/dns/createDNSPreferencesRetriever";
+export type { SetDNSPreferencesReturnType } from "./modules/dns/createDNSPreferencesSetter";
+export type { ListDNSSearchpathsReturnType } from "./modules/dns/createSearchpathsLister";

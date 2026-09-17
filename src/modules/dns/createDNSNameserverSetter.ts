@@ -17,10 +17,10 @@ export default async function createDNSNameserverSetter(
   tailnet: string,
   dns: DNSNameserver[],
   overrideGuardrails = false
-) {
+): Promise<SetNameserversReturnType> {
   if (overrideGuardrails)
     console.warn(
-      "WARNING: Running dns.createDNSNameserverSetter with safety guardrails disabled."
+      "WARNING: Running dns.createNameserverSetter with safety guardrails disabled."
     );
   if (dns.includes("0.0.0.0") && not(overrideGuardrails)) {
     throw new Error(
@@ -42,5 +42,5 @@ export default async function createDNSNameserverSetter(
         req
       )
     );
-  return await req.json();
+  return await req.json() as SetNameserversReturnType;
 }
