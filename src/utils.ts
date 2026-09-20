@@ -15,14 +15,17 @@ export function authorisedFetch(
   otherOptions?: RequestInit,
   requiresJSONContentHeader = false
 ) {
+  const { headers: additionalHeaders, ...requestOptions } = otherOptions ?? {};
+
   return fetch(url, {
+    ...requestOptions,
     headers: {
-      Authorization: `Bearer ${authToken}`,
+      ...additionalHeaders,
       ...(requiresJSONContentHeader
         ? { "Content-Type": "application/json", "Accept": "application/json" }
-        : {})
-    },
-    ...otherOptions
+        : {}),
+      Authorization: `Bearer ${authToken}`
+    }
   });
 }
 
@@ -45,8 +48,9 @@ export function buildErrorMessage(message: string, res: Response) {
  * @returns {string} A partially hidden version of the API key for safe logging
  */
 export function hideApiKey(key: APIKey) {
-  const chars = key.split("tskey-api-")[1].split("");
-  return `${chars[0]}####${chars[5]}`;
+  const keyWithoutPrefix = key.replace(/^tskey-api-/, "");
+  if (keyWithoutPrefix.length < 2) return "####";
+  return `${keyWithoutPrefix[0]}####${keyWithoutPrefix[keyWithoutPrefix.length - 1]}`;
 }
 
 /**
