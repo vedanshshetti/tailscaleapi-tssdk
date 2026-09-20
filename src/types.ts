@@ -1,13 +1,38 @@
 // Global Types
+
+/**
+ * A Tailscale API key type that must start with 'tskey-api-'
+ */
 export type APIKey = `tskey-api-${string}`;
+
+/**
+ * A route in CIDR notation (e.g., "192.168.0.0/24")
+ */
 export type Route = `${number}.${number}.${number}.${number}/${number}`;
 
+/**
+ * A single digit from 0-9
+ */
 type Digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 
+/**
+ * A DNS nameserver address (IP address or hostname)
+ */
 export type DNSNameserver = `${number}.${number}.${number}.${number}` | string;
 
+/**
+ * A Tailscale IP address in the 100.x.x.x range
+ */
 export type IPAddress = `100.${number}.${number}.${number}`;
+
+/**
+ * A Tailscale IP address with port number
+ */
 export type IPAddressWithPort = `${IPAddress}:${number}`;
+
+/**
+ * An ISO 8601 timestamp in a specific format (e.g., "2024-01-15T15:30:45Z")
+ */
 export type ISO8601TimeStamp =
   `${number}-${number}-${number}T15:${Digit}${Digit}:${Digit}${Digit}Z`;
 
@@ -43,3 +68,4 @@ export type { SetNameserversReturnType } from "./modules/dns/createDNSNameserver
 export type { GetDNSPreferencesReturnType } from "./modules/dns/createDNSPreferencesRetriever";
 export type { SetDNSPreferencesReturnType } from "./modules/dns/createDNSPreferencesSetter";
 export type { ListDNSSearchpathsReturnType } from "./modules/dns/createSearchpathsLister";
+export type { SetSearchpathsReturnType } from "./modules/dns/createSearchpathsSetter";

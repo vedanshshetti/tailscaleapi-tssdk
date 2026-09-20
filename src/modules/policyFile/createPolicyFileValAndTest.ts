@@ -8,8 +8,7 @@ export type ValidateAndTestPolicyFileBody = {
   deny: string[];
   proto?: string;
   srcPostureAttrs?: Record<string, string | number | boolean>;
-};
-[];
+}[];
 
 export type ValidateAndTestPolicyFileReturnType =
   | {
@@ -23,6 +22,15 @@ export type ValidateAndTestPolicyFileReturnType =
     }
   | {};
 
+/**
+ * Validates and tests a policy file configuration.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param tailnet - The tailnet name for which to validate the policy
+ * @param body - An array of ACL test configurations to validate
+ * @returns {Promise<ValidateAndTestPolicyFileReturnType>} A promise resolving to validation results or an empty object if validation passes
+ * @throws {Error} If the API request fails
+ */
 export default async function createPolicyFileValAndTest(
   apiKey: APIKey,
   tailnet: string,

@@ -36,6 +36,15 @@ export type ListTailnetKeysReturnType = {
   }[];
 };
 
+/**
+ * Lists all keys (auth keys, API access tokens, and trust credentials) for a given tailnet.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param tailnet - The tailnet name for which to list keys
+ * @param all - Determines whether all keys should be listed (true) or only keys accessible to the current API key (false)
+ * @returns {Promise<ListTailnetKeysReturnType>} A promise resolving to an object containing an array of key objects
+ * @throws {Error} If the API request fails
+ */
 export default async function createTailnetKeysLister(
   apiKey: APIKey,
   tailnet: string,

@@ -13,6 +13,16 @@ export type SetKeyBody = {
   customClaimRules: { [customClaimRule: string]: string };
 };
 
+/**
+ * Updates the configuration of an existing key by its ID.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param tailnet - The tailnet name for which the key exists
+ * @param keyID - The unique identifier of the key to update
+ * @param body - The new key configuration object
+ * @returns {Promise<TailscaleKey>} A promise resolving to the updated key object
+ * @throws {Error} If the API request fails
+ */
 export default async function createKeySetter(
   apiKey: APIKey,
   tailnet: string,

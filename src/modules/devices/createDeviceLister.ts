@@ -60,6 +60,14 @@ export type ListTailnetDevicesReturnType = {
   }[];
 };
 
+/**
+ * Lists all devices for a given tailnet.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param tailnet - The tailnet name for which to list devices
+ * @returns {Promise<ListTailnetDevicesReturnType>} A promise resolving to an object containing an array of device objects
+ * @throws {Error} If the API request fails
+ */
 export default async function createDeviceLister(
   apiKey: APIKey,
   tailnet: string

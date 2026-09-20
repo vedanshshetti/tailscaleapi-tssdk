@@ -58,6 +58,14 @@ export type GetDeviceReturnType = {
   };
 };
 
+/**
+ * Retrieves information for a specific device by its ID.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param deviceID - The unique identifier of the device to retrieve
+ * @returns {Promise<GetDeviceReturnType>} A promise resolving to the device object
+ * @throws {Error} If the API request fails
+ */
 export default async function createDeviceRetriever(
   apiKey: APIKey,
   deviceID: string

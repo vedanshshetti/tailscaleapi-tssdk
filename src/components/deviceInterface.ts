@@ -26,113 +26,151 @@ import {
   UpdateCustomDevicePostureAttributesBody
 } from "../types";
 
+/**
+ * Creates an interface for managing devices in the Tailscale API.
+ * This provides methods for device operations including retrieval, updates, authorization, and more.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param deviceID - The unique identifier of a specific device
+ * @returns {Object} An object with methods for device management
+ */
 const createDevicesInterface = (apiKey: APIKey, deviceID: string) => {
   return {
     /**
-     * Lists all devices for given tailnet.
-     * @param tailnet The Tailnet for which devices should be listed.
-     * @returns {Promise<ListTailnetDevicesReturnType>} A list of devices with additional data.
+     * Lists all devices for a given tailnet.
+     *
+     * @param tailnet - The tailnet name for which devices should be listed
+     * @returns {Promise<ListTailnetDevicesReturnType>} A promise resolving to an object containing an array of device objects
+     * @throws {Error} If the API request fails
      */
     listTailnetDevices: (
       tailnet: string
     ): Promise<ListTailnetDevicesReturnType> =>
       createDeviceLister(apiKey, tailnet),
     /**
-     * Gets the device information for given device ID.
-     * @returns {Promise<GetDeviceReturnType>} An object of device data.
+     * Gets the device information for the device with the given device ID.
+     *
+     * @returns {Promise<GetDeviceReturnType>} A promise resolving to the device object
+     * @throws {Error} If the API request fails
      */
     getDevice: (): Promise<GetDeviceReturnType> =>
       createDeviceRetriever(apiKey, deviceID),
     /**
-     * Updates the custom device posture attributes for given device ID.
-     * @param body Request Body containing posture attributes.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Updates custom device posture attributes in batch for the device with the given device ID.
+     *
+     * @param body - Request body containing nodes with posture attributes to update
+     * @returns {Promise<void>} A promise that resolves when the posture attributes are successfully updated
+     * @throws {Error} If the API request fails
      */
     batchUpdateCustomDevicePostureAttributes: (
       body: UpdateCustomDevicePostureAttributesBody
     ): Promise<void> =>
       createCustomDeviceBatchPostureAttributesUpdater(apiKey, deviceID, body),
     /**
-     * Deletes device with given deviceID.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Deletes the device with the given device ID.
+     *
+     * @returns {Promise<void>} A promise that resolves when the device is successfully deleted
+     * @throws {Error} If the API request fails
      */
     deleteDevice: (): Promise<void> => createDeviceDeletion(apiKey, deviceID),
     /**
-     * Expires the Device Key for the device with given deviceID.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Expires the device key for the device with the given device ID.
+     *
+     * @returns {Promise<void>} A promise that resolves when the device key is successfully expired
+     * @throws {Error} If the API request fails
      */
     expireDeviceKey: (): Promise<void> =>
       createDeviceKeyExpiry(apiKey, deviceID),
     /**
-     * Lists all routes of the device with given deviceID.
-     * @returns {Promise<ListDeviceRoutesReturnType>} An object containing lists of advertised and enabled routes.
+     * Lists all routes (advertised and enabled) for the device with the given device ID.
+     *
+     * @returns {Promise<ListDeviceRoutesReturnType>} A promise resolving to an object containing advertised and enabled routes
+     * @throws {Error} If the API request fails
      */
     listDeviceRoutes: (): Promise<ListDeviceRoutesReturnType> =>
       createDeviceRouteLister(apiKey, deviceID),
     /**
-     * Sets the device routes of the device with given deviceID.
-     * @param body The new routes.
-     * @returns {Promise<SetDeviceRoutesReturnType>} An Object containing the newly updated routes.
+     * Sets the device routes for the device with the given device ID.
+     *
+     * @param body - The new routes configuration
+     * @returns {Promise<SetDeviceRoutesReturnType>} A promise resolving to an object containing the newly updated routes
+     * @throws {Error} If the API request fails
      */
     setDeviceRoutes: (
       body: SetDeviceRoutesBody
     ): Promise<SetDeviceRoutesReturnType> =>
       createDeviceRouteSetter(apiKey, deviceID, body),
     /**
-     * Changes the authorization for a device.
-     * @param authorized Boolean value: true for authorizing device, false for unauthorizing.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Changes the authorization status for the device with the given device ID.
+     *
+     * @param authorized - Boolean value: true to authorize the device, false to unauthorize
+     * @returns {Promise<void>} A promise that resolves when the authorization is successfully updated
+     * @throws {Error} If the API request fails
      */
     authorizeDevice: (authorized: boolean): Promise<void> =>
       createDeviceAuthorizer(apiKey, deviceID, authorized),
     /**
-     * Sets / Changes the device name for device with given deviceID.
-     * @param name The new name.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Sets or changes the name for the device with the given device ID.
+     *
+     * @param name - The new name to set for the device
+     * @returns {Promise<void>} A promise that resolves when the device name is successfully updated
+     * @throws {Error} If the API request fails
      */
     setDeviceName: (name: string): Promise<void> =>
       createDeviceNameSetter(apiKey, deviceID, name),
     /**
-     * Sets / Changes the device tags for device with given deviceID.
-     * @param tags The new tags.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Sets or changes the tags for the device with the given device ID.
+     *
+     * @param tags - An array of tag strings to set on the device
+     * @returns {Promise<void>} A promise that resolves when the device tags are successfully updated
+     * @throws {Error} If the API request fails
      */
     setDeviceTags: (tags: string[]): Promise<void> =>
       createDeviceTagsSetter(apiKey, deviceID, tags),
     /**
-     * Updates the key expiry for device with given deviceID.
-     * @param canKeyExpire Whether key should be able to expire.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Updates whether the device key can expire for the device with the given device ID.
+     *
+     * @param canKeyExpire - Boolean value: true if the key can expire, false if it should be disabled
+     * @returns {Promise<void>} A promise that resolves when the key expiry setting is successfully updated
+     * @throws {Error} If the API request fails
      */
     updateDeviceKey: (canKeyExpire: boolean): Promise<void> =>
       createDeviceKeyUpdater(apiKey, deviceID, canKeyExpire),
     /**
-     * Sets / Changes the IPv4 Address for device with given deviceID.
-     * @param ipv4 The new IPv4 Address (must be in the 100.x.x.x range)
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Sets or changes the IPv4 address for the device with the given device ID.
+     *
+     * @param ipv4 - The new IPv4 address (must be in the 100.x.x.x range)
+     * @returns {Promise<void>} A promise that resolves when the IPv4 address is successfully updated
+     * @throws {Error} If the API request fails
      */
     setDeviceIPV4Address: (ipv4: IPAddress): Promise<void> =>
       createDeviceIPV4AddrSetter(apiKey, deviceID, ipv4),
     /**
-     * Retrieves the posture attributes (and their expiries if set) for device with given deviceID.
-     * @returns {Promise<GetDevicePostureAttributesReturnType>} An object with the device posture attributes and their expiries if set.
+     * Retrieves the posture attributes and their expiries for the device with the given device ID.
+     *
+     * @returns {Promise<GetDevicePostureAttributesReturnType>} A promise resolving to an object with device posture attributes and their expiries
+     * @throws {Error} If the API request fails
      */
     getDevicePostureAttributes:
       (): Promise<GetDevicePostureAttributesReturnType> =>
         createDevicePostureAttributesRetriever(apiKey, deviceID),
     /**
-     * Sets / Updates a custom device posture attribute for device with given deviceID.
-     * @param attribute Attribute that is to be set / updated.
-     * @returns {Promise<GetDevicePostureAttributesReturnType>} An object with the updated device posture attributes and their expiries if set.
+     * Sets or updates a custom device posture attribute for the device with the given device ID.
+     *
+     * @param attribute - The posture attribute object containing name, value, optional comment and expiry
+     * @returns {Promise<GetDevicePostureAttributesReturnType>} A promise resolving to the updated device posture attributes
+     * @throws {Error} If the API request fails
      */
     setCustomDevicePostureAttributes: (
       attribute: SetCustomDevicePostureAttributesBody
     ): Promise<GetDevicePostureAttributesReturnType> =>
       createCustomDevicePostureAttributesSetter(apiKey, deviceID, attribute),
     /**
-     * Deletes a custom device posture attribute for device with given deviceID.
-     * @param attributeKey Attribute Key for attribute that is to be deleted.
-     * @returns {Promise<void>} Void if successful, else throws an error.
+     * Deletes a custom device posture attribute for the device with the given device ID.
+     *
+     * @param attributeKey - The key of the attribute to delete
+     * @returns {Promise<void>} A promise that resolves when the posture attribute is successfully deleted
+     * @throws {Error} If the API request fails
      */
     deleteCustomDevicePostureAttributes: (
       attributeKey: string

@@ -2,6 +2,14 @@ import { TailscaleAPIBaseURL } from "../../constants";
 import { APIKey } from "../../types";
 import { authorisedFetch, buildErrorMessage, hideApiKey } from "../../utils";
 
+/**
+ * Deletes a specific device by its ID.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param deviceID - The unique identifier of the device to delete
+ * @returns {Promise<void>} A promise that resolves when the device is successfully deleted
+ * @throws {Error} If the API request fails
+ */
 export default async function createDeviceDeletion(
   apiKey: APIKey,
   deviceID: string

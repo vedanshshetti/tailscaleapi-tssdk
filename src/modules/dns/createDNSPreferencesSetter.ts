@@ -1,19 +1,24 @@
 import { TailscaleAPIBaseURL } from "../../constants";
 import { APIKey } from "../../types";
-import {
-  authorisedFetch,
-  buildErrorMessage,
-  hideApiKey,
-} from "../../utils";
+import { authorisedFetch, buildErrorMessage, hideApiKey } from "../../utils";
 
 export type SetDNSPreferencesReturnType = {
   magicDNS: boolean;
 };
 
+/**
+ * Sets the DNS preferences for a given tailnet.
+ *
+ * @param apiKey - The Tailscale API key (must start with 'tskey-api-')
+ * @param tailnet - The tailnet name for which to set DNS preferences
+ * @param preferences - An object containing DNS preferences (currently supports magicDNS boolean)
+ * @returns {Promise<SetDNSPreferencesReturnType>} A promise resolving to an object containing the updated DNS preferences
+ * @throws {Error} If the API request fails
+ */
 export default async function createDNSPreferencesSetter(
   apiKey: APIKey,
   tailnet: string,
-  preferences: {magicDNS: boolean},
+  preferences: { magicDNS: boolean }
 ): Promise<SetDNSPreferencesReturnType> {
   const req = await authorisedFetch(
     `${TailscaleAPIBaseURL}/tailnet/${tailnet}/dns/preferences`,
@@ -30,5 +35,5 @@ export default async function createDNSPreferencesSetter(
         req
       )
     );
-  return await req.json() as SetDNSPreferencesReturnType;
+  return (await req.json()) as SetDNSPreferencesReturnType;
 }
