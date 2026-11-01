@@ -28,6 +28,16 @@ const createLoggingInterface = (apiKey: APIKey, tailnet: string) => ({
       `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream`,
       "logging.getLogStream"
     ),
+  setLogStream: (
+    logType: string,
+    body: Record<string, unknown>
+  ): Promise<void> =>
+    requestVoid(
+      apiKey,
+      `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream`,
+      "logging.setLogStream",
+      { method: "PUT", body: JSON.stringify(body) }
+    ),
   deleteLogStream: (logType: string): Promise<void> =>
     requestVoid(
       apiKey,

@@ -6,6 +6,7 @@ declare const createTailnetSettingsInterface: (apiKey: APIKey, tailnet: string) 
     listServices: () => Promise<ListServicesReturnType>;
     listServiceDevices: (serviceName: string) => Promise<Record<string, unknown>>;
     getService: (serviceName: string) => Promise<TailscaleService>;
+    setService: (serviceName: string, body: TailscaleService) => Promise<void>;
     deleteService: (serviceName: string) => Promise<void>;
     getServiceDeviceApproval: (serviceName: string, deviceID: string) => Promise<boolean>;
     setServiceDeviceApproval: (serviceName: string, deviceID: string, approved: boolean) => Promise<void>;

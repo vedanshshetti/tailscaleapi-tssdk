@@ -10,7 +10,7 @@ import { authorisedFetch, buildErrorMessage, hideApiKey } from "../../utils";
  * @throws {Error} If the API request fails
  */
 export default async function createKeyCreation(apiKey, tailnet, body) {
-    const req = await authorisedFetch(`${TailscaleAPIBaseURL}/tailnet/${tailnet}/keys`, apiKey, { body: JSON.stringify(body) }, true);
+    const req = await authorisedFetch(`${TailscaleAPIBaseURL}/tailnet/${tailnet}/keys`, apiKey, { method: "POST", body: JSON.stringify(body) }, true);
     if (!req.ok)
         throw new Error(buildErrorMessage(`Operation keys.createKey with API Key ${hideApiKey(apiKey)} failed;
         Tailscale API returned a status code of ${req.status} with
