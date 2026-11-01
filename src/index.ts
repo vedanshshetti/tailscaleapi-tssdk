@@ -12,6 +12,8 @@ import createUserInvitesInterface from "./components/userInviteInterface";
 import createUsersInterface from "./components/userInterface";
 import { APIKey } from "./types";
 
+export type * from "./types";
+
 /**
  * Main Tailscale API SDK factory function.
  * Creates an interface for interacting with the Tailscale API v2.

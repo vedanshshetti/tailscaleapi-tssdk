@@ -12,21 +12,21 @@ declare const createDeviceInvitesInterface: (apiKey: APIKey, deviceID: string) =
      *
      * @returns {Promise<ListDeviceInvitesReturnType>} The list of device invites.
      */
-    listDeviceInvites: () => Promise<import("../types").ListDeviceInvitesReturnType>;
+    listDeviceInvites: () => Promise<import("..").ListDeviceInvitesReturnType>;
     /**
      * Creates a new device invite.
      *
      * @param body - The invite payload.
      * @returns {Promise<DeviceInvite>} The created invite record.
      */
-    createDeviceInvite: (body: Record<string, unknown>) => Promise<import("../types").DeviceInvite>;
+    createDeviceInvite: (body: Record<string, unknown>) => Promise<import("..").DeviceInvite>;
     /**
      * Gets a single device invite.
      *
      * @param inviteID - The device invite ID.
      * @returns {Promise<DeviceInvite>} The invite record.
      */
-    getDeviceInvite: (inviteID: string) => Promise<import("../types").DeviceInvite>;
+    getDeviceInvite: (inviteID: string) => Promise<import("..").DeviceInvite>;
     /**
      * Deletes a device invite.
      *

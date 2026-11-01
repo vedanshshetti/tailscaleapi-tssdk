@@ -1,4 +1,5 @@
 import { APIKey } from "./types";
+export type * from "./types";
 /**
  * Main Tailscale API SDK factory function.
  * Creates an interface for interacting with the Tailscale API v2.
@@ -177,6 +178,7 @@ declare const TailscaleInterface: (apiKey: APIKey) => {
         listServices: () => Promise<import("./types").ListServicesReturnType>;
         listServiceDevices: (serviceName: string) => Promise<Record<string, unknown>>;
         getService: (serviceName: string) => Promise<import("./types").TailscaleService>;
+        setService: (serviceName: string, body: import("./types").TailscaleService) => Promise<void>;
         deleteService: (serviceName: string) => Promise<void>;
         getServiceDeviceApproval: (serviceName: string, deviceID: string) => Promise<boolean>;
         setServiceDeviceApproval: (serviceName: string, deviceID: string, approved: boolean) => Promise<void>;
@@ -207,6 +209,7 @@ declare const TailscaleInterface: (apiKey: APIKey) => {
         getNetworkLog: () => Promise<Record<string, unknown>>;
         getLogStreamStatus: (logType: string) => Promise<Record<string, unknown>>;
         getLogStream: (logType: string) => Promise<Record<string, unknown>>;
+        setLogStream: (logType: string, body: Record<string, unknown>) => Promise<void>;
         deleteLogStream: (logType: string) => Promise<void>;
     };
     /**

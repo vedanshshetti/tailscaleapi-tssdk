@@ -5,6 +5,7 @@ declare const createLoggingInterface: (apiKey: APIKey, tailnet: string) => {
     getNetworkLog: () => Promise<Record<string, unknown>>;
     getLogStreamStatus: (logType: string) => Promise<Record<string, unknown>>;
     getLogStream: (logType: string) => Promise<Record<string, unknown>>;
+    setLogStream: (logType: string, body: Record<string, unknown>) => Promise<void>;
     deleteLogStream: (logType: string) => Promise<void>;
 };
 export default createLoggingInterface;

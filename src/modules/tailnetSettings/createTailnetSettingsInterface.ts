@@ -7,6 +7,7 @@ import {
   TailnetSettings,
   TailscaleService
 } from "../../types";
+import createServiceSetter from "./createServiceSetter";
 import { requestJson, requestVoid } from "../request";
 
 /** Provides tailnet settings, service, and OAuth app routes. */
@@ -43,6 +44,11 @@ const createTailnetSettingsInterface = (apiKey: APIKey, tailnet: string) => ({
       `${TailscaleAPIBaseURL}/tailnet/${tailnet}/services/${serviceName}`,
       "tailnetSettings.getService"
     ),
+  setService: (
+    serviceName: string,
+    body: TailscaleService
+  ): Promise<void> =>
+    createServiceSetter(apiKey, tailnet, serviceName, body),
   deleteService: (serviceName: string): Promise<void> =>
     requestVoid(
       apiKey,

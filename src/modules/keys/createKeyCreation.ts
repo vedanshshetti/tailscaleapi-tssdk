@@ -51,7 +51,7 @@ export default async function createKeyCreation(
   const req = await authorisedFetch(
     `${TailscaleAPIBaseURL}/tailnet/${tailnet}/keys`,
     apiKey,
-    { body: JSON.stringify(body) },
+    { method: "POST", body: JSON.stringify(body) },
     true
   );
 

@@ -6,6 +6,7 @@ const createLoggingInterface = (apiKey, tailnet) => ({
     getNetworkLog: () => requestJson(apiKey, `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/network`, "logging.getNetworkLog"),
     getLogStreamStatus: (logType) => requestJson(apiKey, `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream/status`, "logging.getLogStreamStatus"),
     getLogStream: (logType) => requestJson(apiKey, `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream`, "logging.getLogStream"),
+    setLogStream: (logType, body) => requestVoid(apiKey, `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream`, "logging.setLogStream", { method: "PUT", body: JSON.stringify(body) }),
     deleteLogStream: (logType) => requestVoid(apiKey, `${TailscaleAPIBaseURL}/tailnet/${tailnet}/logging/${logType}/stream`, "logging.deleteLogStream", { method: "DELETE" })
 });
 export default createLoggingInterface;
